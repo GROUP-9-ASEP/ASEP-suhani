@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - AcadComm</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/messages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<STYLE>
+    .messages-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: calc(100vh - 80px);
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.contacts-list {
+    border-right: 1px solid #eee;
+    background: #f8f9fa;
+}
+
+.search-messages {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-messages input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-bottom: 1px solid #eee;
+}
+
+.contact:hover {
+    background: #f0f2f5;
+}
+
+.contact.active {
+    background: #e3f2fd;
+}
+
+.contact img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info h4 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.contact-info p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+}
+
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.message-input {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.send-btn {
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    background: #45a049;
+}
+</STYLE>
+<body>
+    <div class="container">
+        <!-- Include the same sidebar as index.html -->
+        <main class="content">
+            <div class="messages-container">
+                <div class="contacts-list">
+                    <div class="search-messages">
+                        <input type="text" placeholder="Search messages...">
+                    </div>
+                    <div class="contact-items">
+                        <div class="contact active">
+                            <img src="avatar1.jpg" alt="Contact">
+                            <div class="contact-info">
+                                <h4>John Smith</h4>
+                                <p>Latest message preview...</p>
+                            </div>
+                            <span class="message-time">2m ago</span>
+                        </div>
+                        <!-- More contact items -->
+                    </div>
+                </div>
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-contact">
+                            <img src="avatar1.jpg" alt="Contact">
+                            <div class="contact-info">
+                                <h4>John Smith</h4>
+                                <p>Online</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="messages">
+                        <!-- Message bubbles will go here -->
+                    </div>
+                    <div class="message-input">
+                        <input type="text" placeholder="Type a message...">
+                        <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="messages.js"></script>
+</body>
+</html>
+

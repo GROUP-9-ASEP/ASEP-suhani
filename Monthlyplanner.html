@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Planner</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('image.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: #00f2fe;
+            margin-bottom: 10px;
+        }
+
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .month-selector button {
+            background: #00f2fe;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .month-selector button:hover {
+            background: #4facfe;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .day {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .day:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .task-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .task-popup input, .task-popup select, .task-popup textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .task-popup button {
+            background: #00f2fe;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .task-popup button:hover {
+            background: #4facfe;
+        }
+
+        .task-list {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: red;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; padding: 10px;">
+        <a href="File 2.html" style="color: white; text-decoration: none; font-size: 16px;">⬅ Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h2>📅 Monthly Planner</h2>
+        <div class="month-selector">
+            <button onclick="changeMonth(-1)">◀ Previous</button>
+            <h3 id="monthDisplay"></h3>
+            <button onclick="changeMonth(1)">Next ▶</button>
+        </div>
+        <div class="calendar" id="calendar"></div>
+    </div>
+
+    <!-- Task Popup -->
+    <div class="task-popup" id="taskPopup">
+        <h3 id="popupTitle"></h3>
+        <input type="text" id="taskTitle" placeholder="Task Title">
+        <textarea id="taskInput" placeholder="Enter task..."></textarea>
+        <select id="priority">
+            <option value="High">🔴 High Priority</option>
+            <option value="Medium">🟡 Medium Priority</option>
+            <option value="Low">🟢 Low Priority</option>
+        </select>
+        <button onclick="saveTask()">Save Task</button>
+        <button onclick="closePopup()">Close</button>
+        <div class="task-list" id="taskList"></div>
+    </div>
+
+    <script>
+        let selectedDate = null;
+        let selectedMonth = new Date().getMonth();
+        let selectedYear = new Date().getFullYear();
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        function getDaysInMonth(month, year) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+
+        function generateCalendar() {
+            document.getElementById('monthDisplay').textContent = `${months[selectedMonth]} ${selectedYear}`;
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = "";
+            const daysInMonth = getDaysInMonth(selectedMonth, selectedYear);
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement("div");
+                dayElement.classList.add("day");
+                dayElement.textContent = day;
+                dayElement.onclick = () => openPopup(day);
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        function changeMonth(direction) {
+            selectedMonth += direction;
+            if (selectedMonth < 0) {
+                selectedMonth = 11;
+                selectedYear--;
+            } else if (selectedMonth > 11) {
+                selectedMonth = 0;
+                selectedYear++;
+            }
+            generateCalendar();
+        }
+
+        function openPopup(day) {
+            selectedDate = `${months[selectedMonth]} ${day}, ${selectedYear}`;
+            document.getElementById('popupTitle').textContent = `Tasks for ${selectedDate}`;
+            document.getElementById('taskTitle').value = "";
+            document.getElementById('taskInput').value = "";
+            document.getElementById('taskPopup').style.display = "block";
+            displayTasks();
+        }
+
+        function closePopup() {
+            document.getElementById('taskPopup').style.display = "none";
+        }
+
+        function saveTask() {
+            const taskTitle = document.getElementById('taskTitle').value.trim();
+            const taskText = document.getElementById('taskInput').value.trim();
+            const priority = document.getElementById('priority').value;
+
+            if (!taskTitle || !taskText) return alert("Please fill in all fields!");
+
+            let tasks = JSON.parse(localStorage.getItem('plannerTasks')) || {};
+            if (!tasks[selectedDate]) tasks[selectedDate] = [];
+            tasks[selectedDate].push({ title: taskTitle, text: taskText, priority });
+            localStorage.setItem('plannerTasks', JSON.stringify(tasks));
+
+            displayTasks();
+            document.getElementById('taskTitle').value = "";
+            document.getElementById('taskInput').value = "";
+        }
+
+        function displayTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = "";
+        }
+
+        document.addEventListener("DOMContentLoaded", generateCalendar);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #85A98F;
+            padding: 1rem 2rem;
+            color: white;
+            position: relative;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .nav-brand img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-brand span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section with Backdrop */
+        .hero {
+            background: url('backdrop1.png') center/cover no-repeat;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .hero p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .hero a {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            background-color: #5A6C57;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .hero a:hover {
+            background-color: #D3F1DF;
+            color: black;
+        }
+
+        .features {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps {
+            background-color: #f4f4f4;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .steps .step-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            background-color: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #5A6C57;
+            color: white;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                position: relative;
+                left: auto;
+                transform: none;
+                margin-bottom: 10px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                margin-left: 0;
+                text-align: center;
+            }
+
+            .feature-cards, .step-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="nav-brand">
+            <img src="logo.png" alt="Intelearn Logo">
+            <span>Welcome to INTELEARN</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Features</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Connect, Communicate, and Collaborate Effortlessly</h2>
+    <p>Experience seamless communication between students and teachers.</p>
+    <a href="File 1.html">Get Started</a>
+    <a href="Learnmore.html">Learn More</a>
+</section>
+
+<section class="features">
+    <h3>Empowering Communication Between Students and Teachers</h3>
+    <div class="feature-cards">
+        <div class="card">
+            <h4>Effortless Messaging</h4>
+            <p>Instant communication for improved collaboration.</p>
+        </div>
+        <div class="card">
+            <h4>Streamlined Assignments</h4>
+            <p>Submit and manage assignments with ease.</p>
+        </div>
+        <div class="card">
+            <h4>Track Progress</h4>
+            <p>Monitor academic growth effortlessly.</p>
+        </div>
+    </div>
+</section>
+
+<section class="steps">
+    <h3>Discover How Our Platform Enhances Communication</h3>
+    <div class="step-list">
+        <div class="step">
+            <h4>Step 1</h4>
+            <p>Create Your Account</p>
+        </div>
+        <div class="step">
+            <h4>Step 2</h4>
+            <p>Set Up Your Profile</p>
+        </div>
+        <div class="step">
+            <h4>Step 3</h4>
+            <p>Start Communicating</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Intelearn</p>
+</footer>
+
+</body>
+</html>

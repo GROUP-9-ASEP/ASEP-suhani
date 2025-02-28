@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Timetable</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('image.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #00f2fe;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #00f2fe;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #00f2fe;
+            color: black;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            background: #00f2fe;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4facfe;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        input, select {
+            padding: 8px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; padding: 10px;">
+        <a href="File 2.html" style="color: white; text-decoration: none; font-size: 16px;">⬅ Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h2>📅 Class Timetable</h2>
+
+        <table id="timetable">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Subject</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Timetable Data Will Be Added Here -->
+            </tbody>
+        </table>
+
+        <h3>➕ Add a Class</h3>
+        <div class="form-group">
+            <select id="day">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="time" id="time">
+        </div>
+        <div class="form-group">
+            <input type="text" id="subject" placeholder="Enter Subject">
+        </div>
+        <button class="btn" onclick="addClass()">Add Class</button>
+    </div>
+    
+
+    <script>
+        function loadTimetable() {
+            const timetable = JSON.parse(localStorage.getItem("timetable")) || [];
+            const tableBody = document.querySelector("#timetable tbody");
+            tableBody.innerHTML = "";
+
+            timetable.forEach((entry, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${entry.day}</td>
+                    <td>${entry.time}</td>
+                    <td>${entry.subject}</td>
+                    <td><button class="btn" onclick="removeClass(${index})">❌ Remove</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function addClass() {
+            const day = document.getElementById("day").value;
+            const time = document.getElementById("time").value;
+            const subject = document.getElementById("subject").value;
+
+            if (time && subject) {
+                const timetable = JSON.parse(localStorage.getItem("timetable")) || [];
+                timetable.push({ day, time, subject });
+                localStorage.setItem("timetable", JSON.stringify(timetable));
+                loadTimetable();
+                alert("Class added successfully!");
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        function removeClass(index) {
+            const timetable = JSON.parse(localStorage.getItem("timetable")) || [];
+            timetable.splice(index, 1);
+            localStorage.setItem("timetable", JSON.stringify(timetable));
+            loadTimetable();
+        }
+
+        document.addEventListener("DOMContentLoaded", loadTimetable);
+    </script>
+
+</body>
+</html>

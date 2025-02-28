@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url('image.png') no-repeat center center/cover;
+    }
+
+    h2 {
+        color: #fdfeff;
+    }
+    h4{
+        color:white;
+    }
+
+    .event-header {
+        background-color: #f8f9fa;
+        padding: 15px;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        transition: background 0.3s;
+    }
+
+    .event-header:hover {
+        background-color: #e2e6ea;
+    }
+
+    .event-body {
+        background-color: #ffffff;
+        padding: 15px;
+        border: 1px solid #ddd;
+        display: none;
+        border-radius: 5px;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<body>
+    <div style="text-align: left; padding: 10px;">
+        <a href="File 2.html" style="color: white; text-decoration: none; font-size: 16px;">⬅ Back to Dashboard</a>
+    </div>
+    
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">My Important Notices</h2>
+
+        <!-- Search Bar -->
+        <input type="text" id="search" class="form-control mb-3" placeholder="Search events...">
+
+        <!-- Event List -->
+        <div class="list-group" id="event-list">
+            <!-- Event Items will be dynamically inserted here -->
+        </div>
+
+        <!-- Form to Add New Events -->
+        <div class="mt-4">
+            <h4>Add a New Notice</h4>
+            <form id="add-event-form">
+                <div class="mb-2">
+                    <input type="text" id="event-title" class="form-control" placeholder="Event Title" required>
+                </div>
+                <div class="mb-2">
+                    <input type="date" id="event-date" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <textarea id="event-description" class="form-control" placeholder="Event Description" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Sample Events Data
+            let events = [
+                {
+                    title: "Annual Science Conference 2025",
+                    date: "2025-03-15",
+                    description: "Join us for the biggest science conference of the year featuring guest speakers and workshops."
+                },
+                {
+                    title: "Spring Semester Kick-Off",
+                    date: "2025-04-01",
+                    description: "The start of the new academic semester. Meet your professors and get familiar with the syllabus."
+                },
+                {
+                    title: "Guest Lecture: Innovations in AI",
+                    date: "2025-04-20",
+                    description: "A renowned professor will discuss cutting-edge developments in Artificial Intelligence and its future impact."
+                }
+            ];
+
+            // Function to Render Events
+            function renderEvents(eventList) {
+                $("#event-list").empty();
+                eventList.forEach((event, index) => {
+                    let eventItem = `
+                        <div class="list-group-item">
+                            <div class="event-header" data-bs-toggle="collapse" data-bs-target="#event-${index}">
+                                <strong>${event.title}</strong> - ${new Date(event.date).toDateString()}
+                            </div>
+                            <div class="collapse event-body" id="event-${index}">
+                                <p>${event.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    $("#event-list").append(eventItem);
+                });
+            }
+
+            // Initial Render
+            renderEvents(events);
+
+            // Search Filter
+            $("#search").on("input", function() {
+                let query = $(this).val().toLowerCase();
+                $(".list-group-item").each(function() {
+                    let text = $(this).text().toLowerCase();
+                    $(this).toggle(text.includes(query));
+                });
+            });
+
+            // Add New Event
+            $("#add-event-form").submit(function(e) {
+                e.preventDefault();
+                let newEvent = {
+                    title: $("#event-title").val(),
+                    date: $("#event-date").val(),
+                    description: $("#event-description").val()
+                };
+
+                events.push(newEvent);
+                renderEvents(events);
+
+                // Clear form fields
+                $("#event-title").val("");
+                $("#event-date").val("");
+                $("#event-description").val("");
+
+                alert("New event added successfully!");
+            });
+        });
+    </script>
+</body>
+</html>

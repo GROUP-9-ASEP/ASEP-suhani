@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments & Homework</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('image.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #00f2fe;
+        }
+
+        .assignment-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .assignment-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .assignment-item span {
+            flex: 1;
+        }
+
+        .assignment-item button {
+            padding: 8px 12px;
+            border: none;
+            background: #00f2fe;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .assignment-item button:hover {
+            background: #4facfe;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            background: #00f2fe;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #4facfe;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            background: #00f2fe;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4facfe;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; padding: 10px;">
+        <a href="File 2.html" style="color: white; text-decoration: none; font-size: 16px;">⬅ Back to Dashboard</a>
+    </div>
+    
+
+    <div class="container">
+        <h2>📚 Assignments & Homework</h2>
+
+        <ul class="assignment-list" id="assignmentList">
+            <li class="assignment-item">
+                <span>Math Homework - Due: March 5, 2025</span>
+                <button onclick="downloadAssignment('math_homework.pdf')">Download</button>
+            </li>
+            <li class="assignment-item">
+                <span>Science Report - Due: March 10, 2025</span>
+                <button onclick="downloadAssignment('science_report.pdf')">Download</button>
+            </li>
+        </ul>
+
+        <div class="upload-section">
+            <h3>📤 Upload Your Assignment</h3>
+            <input type="file" id="fileUpload">
+            <label for="fileUpload">Choose File</label>
+            <button class="btn" onclick="uploadAssignment()">Upload</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadAssignment(fileName) {
+            alert("Downloading: " + fileName);
+        }
+
+        function uploadAssignment() {
+            const fileInput = document.getElementById("fileUpload");
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+                    assignments.push({ name: file.name, data: e.target.result });
+                    localStorage.setItem("assignments", JSON.stringify(assignments));
+                    displayUploadedAssignments();
+                    alert("Assignment uploaded: " + file.name);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please select a file to upload.");
+            }
+        }
+
+        function displayUploadedAssignments() {
+            const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+            const assignmentList = document.getElementById("assignmentList");
+
+            assignmentList.innerHTML = `
+                <li class="assignment-item">
+                    <span>Math Homework - Due: March 5, 2025</span>
+                    <button onclick="downloadAssignment('math_homework.pdf')">Download</button>
+                </li>
+                <li class="assignment-item">
+                    <span>Science Report - Due: March 10, 2025</span>
+                    <button onclick="downloadAssignment('science_report.pdf')">Download</button>
+                </li>
+            `;
+
+            assignments.forEach((assignment, index) => {
+                const listItem = document.createElement("li");
+                listItem.className = "assignment-item";
+                listItem.innerHTML = `
+                    <span>${assignment.name}</span>
+                    <button onclick="downloadUploadedAssignment(${index})">Download</button>
+                `;
+                assignmentList.appendChild(listItem);
+            });
+        }
+
+        function downloadUploadedAssignment(index) {
+            const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+            const assignment = assignments[index];
+
+            if (assignment) {
+                const link = document.createElement("a");
+                link.href = assignment.data;
+                link.download = assignment.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", displayUploadedAssignments);
+        document.addEventListener("DOMContentLoaded", () => {
+    const userName = localStorage.getItem("userName") || "Guest";
+    document.querySelector("h2").textContent = `📚 ${userName}'s Assignments & Homework`;
+});
+
+
+    </script>
+
+</body>
+</html>

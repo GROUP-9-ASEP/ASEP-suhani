@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
+        /* Background with academic theme */
+        body {
+            margin: 0;
+            font-family: 'Merriweather', serif;
+            background: url('image.png') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            height: 100vh;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 51, 102, 0.7);
+            padding: 15px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navbar logo */
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #99ccff;
+            text-shadow: 0 2px 5px rgba(0, 242, 254, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar .logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navbar links */
+        .navbar .nav-links {
+            display: flex;
+            justify-content: space-around;
+            flex: 1;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #cce6ff;
+            font-size: 16px;
+            margin: 0 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover effect */
+        .navbar a:hover {
+            background: rgba(0, 102, 204, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Dashboard container */
+        .dashboard-container {
+            margin-top: 120px;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .dashboard-container h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-container p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar .nav-links {
+                flex-direction: column;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const schoolName = localStorage.getItem('schoolName') || "SMK PUSDIKHUBAD";
+            const userName = localStorage.getItem('userName');
+
+            document.querySelector('.navbar .logo').textContent = schoolName;
+            
+            const loginBtn = document.querySelector('.navbar .login');
+            if (userName) {
+                loginBtn.textContent = "Logout";
+                loginBtn.href = "#";
+                loginBtn.addEventListener("click", () => {
+                    localStorage.clear();
+                    window.location.href = "login3.html";
+                });
+            } else {
+                loginBtn.textContent = "Login";
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">SMK PUSDIKHUBAD</div>
+        <div class="nav-links">
+            <a href="Dashboard.html"><span class="icon">&#x1F4CA;</span> Dashboard</a>
+            <a href="try.html"><span class="icon">💬</span>Messaging </a>
+            <a href="Monthlyplanner.html"><span class="icon">📅</span>Monthly Planner</a>
+            <a href="Whiteboard.html"><span class="icon">📝</span>Whiteboard</a>
+            <a href="File 3.html"><span class="icon">📚</span> Assignments & Homework</a>
+            <a href="notices.html" class="icon"><span class="icon">📜</span>My Notices</a>
+            <a href="timetable.html"><span class="icon">&#x1F4C5;</span>My Schedule</a>
+            <a href="Doubtforum.html"><span class="icon">💬</span>Doubt Forum</a>
+            <a href="File 1.html" class="login"><span class="icon">&#x1F511;</span> Login</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <h1>Welcome to Your Academic Dashboard</h1>
+        <p>Track your classes, schedules, and lessons in one place.</p>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const schoolName = localStorage.getItem('schoolName') || "SMK PUSDIKHUBAD";
+        const userName = localStorage.getItem('userName') || "Guest";
+
+        document.querySelector('.navbar .logo').textContent = schoolName;
+
+        const dashboardContainer = document.querySelector(".dashboard-container");
+        dashboardContainer.innerHTML = `<h1>Welcome, ${userName}</h1>
+                                        <p>Track your classes, schedules, and lessons in one place.</p>`;
+
+        const loginBtn = document.querySelector('.navbar .login');
+        if (userName !== "Guest") {
+            loginBtn.textContent = "Logout";
+            loginBtn.href = "#";
+            loginBtn.addEventListener("click", () => {
+                localStorage.clear();
+                window.location.href = "File 1.html"; // Redirect back to login
+            });
+        } else {
+            loginBtn.textContent = "Login";
+        }
+    });
+</script>
+
+</html>

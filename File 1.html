@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
+        /* Full-page academic background */
+        body {
+            margin: 0;
+            font-family: 'Merriweather', serif;
+            background: url('image.png') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Glassmorphic login container */
+        .login-container {
+            background: rgba(0, 51, 102, 0.7);
+            padding: 25px 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 102, 204, 0.6);
+        }
+
+        /* Heading */
+        .login-container h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #99ccff;
+            margin-bottom: 15px;
+        }
+
+        /* Labels */
+        .login-container label {
+            display: block;
+            text-align: left;
+            font-weight: 400;
+            color: #66b3ff;
+            margin: 5px 0 3px;
+        }
+
+        /* Input Fields */
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            background: rgba(0, 102, 204, 0.3);
+            color: #cce6ff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        /* Placeholder */
+        .login-container input::placeholder {
+            color: rgba(204, 229, 255, 0.6);
+        }
+
+        /* Input Focus Effect */
+        .login-container input:focus {
+            background: rgba(0, 102, 204, 0.5);
+        }
+
+        /* Button */
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(to right, #0077b6, #005c99);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Button Hover */
+        .login-container button:hover {
+            background: linear-gradient(to right, #005c99, #003d66);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Academic Login</h2>
+        <form id="loginForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="school">School:</label>
+            <input type="text" id="school" placeholder="Enter your school" required>
+
+            <label for="rollNo">Roll Number:</label>
+            <input type="text" id="rollNo" placeholder="Enter your roll number" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter your password" required minlength="6">
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const name = document.getElementById("name").value;
+        const school = document.getElementById("school").value;
+
+        // Save to local storage
+        localStorage.setItem("userName", name);
+        localStorage.setItem("schoolName", school);
+
+        // Redirect to Dashboard
+        window.location.href = "File 2.html"; 
+    });
+</script>
+
+</html>
+
